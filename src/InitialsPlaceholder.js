@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./index.css";
 import PropTypes from "prop-types";
 
 const InitialsPlaceholder = ({ value, bgColor, size, textColor, fontSize }) => {
-  const [firstInitial, setFirstInitial] = useState("");
-  const [secondInitial, setSecondInitial] = useState("");
-
-  useEffect(() => {
+  const getInitials = () => {
     let words = value.trim().split(/\s+/);
-    if (words.length === 1) {
-      setFirstInitial(words[0].charAt(0).toUpperCase());
-      setSecondInitial("");
-    } else if (words.length > 1) {
-      setFirstInitial(words[0].charAt(0).toUpperCase());
-      setSecondInitial(words[1].charAt(0).toUpperCase());
-    } else {
-      setFirstInitial("");
-      setSecondInitial("");
-    }
-  }, []);
+    return words.map((word) => word.charAt(0).toUpperCase());
+  };
+
+  const [firstInitial = "", secondInitial = ""] = React.useMemo(getInitials, [
+    value,
+  ]);
 
   return (
     <div
